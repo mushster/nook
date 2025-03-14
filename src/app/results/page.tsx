@@ -31,12 +31,10 @@ function SearchResults() {
   const [showUnsupportedModal, setShowUnsupportedModal] = useState(false);
   
   useEffect(() => {
-    // Trigger the search when the component loads with a query parameter
     if (queryParam) {
       searchOpenAI(queryParam);
     }
     
-    // Set loaded state after a small delay to trigger animations
     const timer = setTimeout(() => {
       setIsLoaded(true);
     }, 100);
@@ -45,13 +43,11 @@ function SearchResults() {
   }, [queryParam]);
   
   const searchOpenAI = async (searchQuery: string) => {
-    // Clear previous results and reset state
     setIsSearching(true);
     setError(null);
     setShowUnsupportedModal(false);
     
     try {
-      // Call to your backend API endpoint that will handle the OpenAI request
       const response = await fetch('/api/search', {
         method: 'POST',
         headers: {
@@ -74,7 +70,6 @@ function SearchResults() {
           setShowUnsupportedModal(true);
         }
       } else {
-        // Handle unexpected data format
         setError('Received invalid data format from server');
         setResults([]);
       }
@@ -288,10 +283,7 @@ function SearchResults() {
                 </div>
                 <h3 className="text-xl font-bold mb-3">Unsupported Query</h3>
                 <p className="text-sm text-[var(--foreground)]/80 mb-4">
-                  Your search query could not be processed. Please try a more specific query about finding similar places.
-                </p>
-                <p className="text-xs text-[var(--foreground)]/70 mb-6">
-                  Example: &quot;Places in Tokyo similar to Williamsburg&quot; or &quot;Cafes in Paris similar to Blue Bottle&quot;
+                  Your search query could not be processed.
                 </p>
                 <button
                   onClick={closeModal}
@@ -316,7 +308,6 @@ function SearchResults() {
   );
 }
 
-// Main component with Suspense boundary
 export default function Results() {
   return (
     <Suspense fallback={<div className="min-h-screen bg-[var(--background)] flex items-center justify-center">

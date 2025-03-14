@@ -23,7 +23,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center min-h-screen p-8 bg-[var(--background)]">   
-      {/* New Header */}
       <h1 className="text-4xl font-bold mb-8">
         Find your <span 
           className="inline-block relative bg-gradient-to-r from-[#e07a5f] via-[#81b29a] to-[#f2cc8f] text-transparent bg-clip-text"
@@ -82,7 +81,7 @@ export default function Home() {
         {/* Search Tips */}
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
           {[
-            { title: "Find Similar Places", description: "Enter a location to find similar spots worldwide", color: "var(--primary)" },
+            { title: "Find New Favorites", description: "Enter a location to find similar spots worldwide", color: "var(--primary)" },
             { title: "Be Specific", description: "Try 'cafes in Paris similar to Blue Bottle'", color: "var(--secondary)" },
             { title: "Compare Cities", description: "Search 'neighborhoods in Berlin like Brooklyn'", color: "var(--accent)" }
           ].map((tip, i) => (
@@ -100,7 +99,6 @@ export default function Home() {
         </div>
       </div>
       
-      {/* Flex spacer to push content to middle */}
       <div className="flex-grow"></div>
     </div>
   );

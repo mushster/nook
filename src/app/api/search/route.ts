@@ -11,13 +11,10 @@ interface SearchResult {
   url?: string;
 }
 
-// Initialize OpenAI client with error handling for missing API key
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || ''
 });
 
-// Simple in-memory cache for search results
-// For production, consider using Redis or another persistent cache
 interface CacheEntry {
   results: SearchResult[];
   timestamp: number;
@@ -26,13 +23,11 @@ interface CacheEntry {
 const CACHE_EXPIRY = 1000 * 60 * 60; // Cache for 1 hour
 const searchCache = new Map<string, CacheEntry>();
 
-// Simple rate limiting by IP address
 const rateLimits = new Map<string, { count: number, resetTime: number }>();
-const RATE_LIMIT = 10; // Maximum requests per minute
-const RATE_WINDOW = 60 * 1000; // 1 minute in milliseconds
+const RATE_LIMIT = 10;
+const RATE_WINDOW = 60 * 1000;
 
 export async function POST(request: Request) {
-  // Get IP address (implementation depends on hosting platform)
   const ip = request.headers.get('x-forwarded-for') || 'unknown';
   
   // Check rate limit
@@ -93,17 +88,26 @@ export async function POST(request: Request) {
           "description": "Brief description",
           "locationDetails": "Address or location info",
           "similarity": "Why it's similar",
-          "category": "Type of place",
+          "category": "Can be multiple types separated by commas (e.g., 'Restaurant, Bar' or 'Park, Cultural Site')",
           "url": "Optional link"
         },
         ...more results...
       ]
     }
+
+    When explaining similarities:
+    - Use varied, natural language that avoids repetitive patterns
+    - Draw from different aspects like atmosphere, demographics, history, architecture, culture, etc.
+    - Be specific about what makes the connection unique
+    - Mix both objective and subjective observations
+    - Avoid starting every similarity with the same phrases
+    - Consider both obvious and unexpected parallels
     
-    It's important to provide exactly 7 results when possible.
+    Categories can include multiple types when appropriate (e.g., "Restaurant, Bar" or "Park, Cultural Site").
+    
+    It's important to provide exactly 7 results when possible. Do not respond if the query is not related to travel or finding similar places or seems to be a joke / not a real search.
     This exact format with a results array is required. Do not return any other format.`;
 
-    // Make a request to OpenAI
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini-2024-07-18",
       messages: [
@@ -114,31 +118,24 @@ export async function POST(request: Request) {
       temperature: 0.7,
     });
 
-    // Extract the response text
     const responseText = completion.choices[0].message.content;
     
     try {
-      // Parse the response as JSON
       const parsedResponse = JSON.parse(responseText || '{"results": []}');
       
       let results: SearchResult[] = [];
       
-      // Fix structure mismatch by adapting the response format
       if (!parsedResponse.results) {
-        // Look for any array property that might contain the results
         const arrayProps = Object.keys(parsedResponse).filter(key => 
           Array.isArray(parsedResponse[key])
         );
         
         if (arrayProps.length > 0) {
-          // Found an array property, use it as results
           const propertyWithResults = arrayProps[0];
           results = parsedResponse[propertyWithResults];
         } else if (Array.isArray(parsedResponse)) {
-          // The response itself is an array
           results = parsedResponse;
         } else {
-          // No arrays found, return debug info
           results = [{
             title: "Response Format Issue",
             description: "The search service returned data in an unexpected format.",
@@ -148,11 +145,9 @@ export async function POST(request: Request) {
           }];
         }
       } else {
-        // If it already has results property, use it
         results = parsedResponse.results;
       }
       
-      // Store in cache
       searchCache.set(cacheKey, {
         results,
         timestamp: Date.now()
@@ -161,14 +156,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ results });
     } catch (parseError) {
       console.error("Failed to parse search results:", parseError);
-      // Fallback response with error message
       return NextResponse.json({ 
         results: [],
         error: 'Failed to parse search results'
       }, { status: 500 });
     }
   } catch (error: unknown) {
-    // Enhanced error logging
     console.error("Search API error:", error);
     return NextResponse.json({ 
       results: [],

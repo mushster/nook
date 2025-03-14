@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import React from "react";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,20 +14,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Similar Places - Find Places Like Your Favorites",
+  title: "Nook",
   description: "Discover locations around the world that are similar to your favorite places.",
   openGraph: {
-    title: "Similar Places - Find Places Like Your Favorites",
+    title: "Nook - Find Places Just Like Your Favorites",
     description: "Discover locations around the world that are similar to your favorite places.",
-    url: "https://your-deployed-domain.com",
-    siteName: "Similar Places",
-    images: [
-      {
-        url: "https://your-deployed-domain.com/og-image.jpg",
-        width: 1200,
-        height: 630,
-      }
-    ],
+    url: "https://trynook.vercel.app",
+    siteName: "Nook",
     locale: "en_US",
     type: "website",
   },
