@@ -55,6 +55,7 @@ export default function Home() {
             <div className={`
               relative flex items-center w-full h-16 rounded-md 
               neo-brutalism
+              bg-[var(--background)]
               ${isFocused ? "translate-y-[-4px] translate-x-[-4px] shadow-[8px_8px_0_var(--foreground)]" : ""}
               transition-all duration-300
             `}>
@@ -82,8 +83,8 @@ export default function Home() {
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
           {[
             { title: "Find New Favorites", description: "Enter a location to find similar spots worldwide", color: "var(--primary)" },
-            { title: "Be Specific", description: "Try 'cafes in Paris similar to Blue Bottle'", color: "var(--secondary)" },
-            { title: "Compare Cities", description: "Search 'neighborhoods in Berlin like Brooklyn'", color: "var(--accent)" }
+            { title: "Compare Cities", description: "Search 'neighborhoods in Berlin like Brooklyn'", color: "var(--accent)" },
+            { title: "Be Specific", description: "Try 'cafes in Paris similar to Blue Bottle'", color: "var(--secondary)" }
           ].map((tip, i) => (
             <div key={i} className="
               p-4 rounded-md

@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  /* Updated neobrutalism color palette */
   --background: #f5f3ed;
   --foreground: #3d405b;
   --primary: #e07a5f;
@@ -18,16 +17,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #121212;
-    --foreground: #f5f3ed;
-    --primary: #e07a5f;
-    --secondary: #81b29a;
-    --accent: #f2cc8f;
-  }
-}
-
 body {
   background-color: var(--background);
   color: var(--foreground);
@@ -35,7 +24,6 @@ body {
   min-height: 100vh;
 }
 
-/* Neo-brutalism button/element styles */
 .neo-brutalism {
   border: var(--border-width) solid var(--foreground);
   box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--foreground);

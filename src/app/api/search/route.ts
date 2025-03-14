@@ -27,6 +27,16 @@ const rateLimits = new Map<string, { count: number, resetTime: number }>();
 const RATE_LIMIT = 10;
 const RATE_WINDOW = 60 * 1000;
 
+// Add this function after the interfaces and before the route handler
+function isValidUrl(url: string): boolean {
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export async function POST(request: Request) {
   const ip = request.headers.get('x-forwarded-for') || 'unknown';
   
@@ -89,12 +99,12 @@ export async function POST(request: Request) {
           "locationDetails": "Address or location info",
           "similarity": "Why it's similar",
           "category": "Can be multiple types separated by commas (e.g., 'Restaurant, Bar' or 'Park, Cultural Site')",
-          "url": "Optional link"
         },
         ...more results...
       ]
     }
 
+    
     When explaining similarities:
     - Use varied, natural language that avoids repetitive patterns
     - Draw from different aspects like atmosphere, demographics, history, architecture, culture, etc.
@@ -145,7 +155,16 @@ export async function POST(request: Request) {
           }];
         }
       } else {
-        results = parsedResponse.results;
+        // Validate and clean up results
+        results = parsedResponse.results.map((result: SearchResult) => ({
+          ...result,
+          // Remove URL if invalid, ensure it's HTTPS
+          url: result.url ? (
+            isValidUrl(result.url) ? 
+              result.url.replace(/^http:/, 'https:') : 
+              undefined
+          ) : undefined
+        }));
       }
       
       searchCache.set(cacheKey, {

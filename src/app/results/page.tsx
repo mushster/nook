@@ -194,7 +194,7 @@ function SearchResults() {
                   <div
                     className="block p-6 rounded-md
                       neo-brutalism
-                      bg-white dark:bg-[#1e1e1e]
+                      bg-white
                       group-hover:translate-y-[-4px] group-hover:translate-x-[-4px]
                       group-hover:shadow-[8px_8px_0_var(--foreground)]
                       transition-all duration-300"
@@ -204,35 +204,18 @@ function SearchResults() {
                         <h2 className="text-lg font-bold group-hover:text-[var(--primary)] transition-colors">
                           {result.title}
                         </h2>
-                        <p className="mt-3 text-[var(--foreground)] dark:text-[var(--foreground)]/90">
+                        <p className="mt-3 text-[var(--foreground)]">
                           {result.description}
                         </p>
                         {result.locationDetails && (
-                          <p className="mt-3 text-sm text-[var(--foreground)]/70 dark:text-[var(--foreground)]/60 font-medium">
+                          <p className="mt-3 text-sm text-[var(--foreground)]/70 font-medium">
                             {result.locationDetails}
                           </p>
                         )}
                         {result.similarity && (
-                          <p className="mt-2 text-sm text-[var(--secondary)] dark:text-[var(--secondary)] font-bold">
+                          <p className="mt-2 text-sm text-[var(--secondary)] font-bold">
                             {result.similarity}
                           </p>
-                        )}
-                        {result.url && (
-                          <a 
-                            href={result.url}
-                            target="_blank"
-                            rel="noopener noreferrer" 
-                            className="mt-4 inline-block text-sm bg-[var(--primary)] text-white px-4 py-2 rounded-md 
-                              border-[3px] border-[var(--foreground)]
-                              shadow-[3px_3px_0_var(--foreground)]
-                              hover:translate-y-[-2px] hover:translate-x-[-2px]
-                              hover:shadow-[5px_5px_0_var(--foreground)]
-                              active:translate-y-[0px] active:translate-x-[0px]
-                              active:shadow-[3px_3px_0_var(--foreground)]
-                              transition-all duration-300 font-bold"
-                          >
-                            Learn more →
-                          </a>
                         )}
                       </div>
                       <span className="px-3 py-1 text-xs rounded-md 
@@ -258,7 +241,7 @@ function SearchResults() {
             animate={{ opacity: 1, y: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
           >
-            <div className="relative bg-white dark:bg-[#1e1e1e] rounded-md neo-brutalism p-6 max-w-md w-full">
+            <div className="relative bg-white rounded-md neo-brutalism p-6 max-w-md w-full">
               <button 
                 onClick={closeModal}
                 className="absolute top-3 right-3 h-8 w-8 flex items-center justify-center 
