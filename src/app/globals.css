@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+:root {
+  /* Updated neobrutalism color palette */
+  --background: #f5f3ed;
+  --foreground: #3d405b;
+  --primary: #e07a5f;
+  --secondary: #81b29a;
+  --accent: #f2cc8f;
+  --border-width: 3px;
+  --shadow-offset: 4px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #121212;
+    --foreground: #f5f3ed;
+    --primary: #e07a5f;
+    --secondary: #81b29a;
+    --accent: #f2cc8f;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+  min-height: 100vh;
+}
+
+/* Neo-brutalism button/element styles */
+.neo-brutalism {
+  border: var(--border-width) solid var(--foreground);
+  box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--foreground);
+  transition: all 0.2s ease;
+  background-color: white;
+}
+
+.neo-brutalism:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--foreground);
+}
+
+.neo-brutalism:active {
+  transform: translate(0px, 0px);
+  box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--foreground);
+}
+
+/* Add smooth focus outlines for accessibility */
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background: var(--background);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border: var(--border-width) solid var(--foreground);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--foreground);
+  border-radius: 0;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-6px) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+  75% {
+    transform: translateY(-4px) rotate(1deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
